@@ -11,8 +11,8 @@ f  = @(x) sin(x);     % Funksioni
 df = @(x) cos(x);     % Derivati ekzakt
 
 a = 0;
-b = 2*pi;
-N = 15;                       % pak pika që tabela të jetë e lexueshme
+b = pi;
+N = 100;                       % pak pika që tabela të jetë e lexueshme
 x = linspace(a, b, N);
 h = x(2) - x(1);
 
