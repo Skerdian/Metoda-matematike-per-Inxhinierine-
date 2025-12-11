@@ -1,4 +1,4 @@
-function demo_gauss()
+function Ekzekutimi_gauss()
 f1 = @(x) exp(x);
 exact1 = exp(1)-1;
 

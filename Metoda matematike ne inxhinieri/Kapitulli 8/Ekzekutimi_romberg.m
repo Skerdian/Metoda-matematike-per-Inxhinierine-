@@ -1,4 +1,4 @@
-function demo_romberg()
+function Ekzekutimi_romberg()
 f1 = @(x) exp(x);
 exact1 = exp(1) - 1;
 fprintf('\n=== Shembulli 1: e^x ne [0,1] ===\n');
