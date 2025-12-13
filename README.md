@@ -1,5 +1,5 @@
-# Metoda-matematike-per-Inxhinierine-
-Ky material përmban një përmbledhje të plotë dhe të strukturuar të lëndës “Metoda Matematike për Inxhinierinë”, e shoqëruar me implementimet përkatëse në MATLAB. Përmbajtja integron metoda analitike dhe numerike të përdorura gjerësisht në modelimin dhe zgjidhjen e problemeve inxhinierike, duke theksuar qasjen e kombinuar teorike–praktike.
+# Metoda-matematike-ne-Inxhinieri-
+Ky material përmban një përmbledhje të plotë dhe të strukturuar të lëndës “Metoda Matematike ne Inxhinieri”, e shoqëruar me implementimet përkatëse në MATLAB. Përmbajtja integron metoda analitike dhe numerike të përdorura gjerësisht në modelimin dhe zgjidhjen e problemeve inxhinierike, duke theksuar qasjen e kombinuar teorike–praktike.
 
 Materiali përfshin:
 
