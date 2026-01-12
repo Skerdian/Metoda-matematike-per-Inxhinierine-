@@ -1,53 +1,58 @@
-% DEMO_CUBIC_SPLINE_POINTS
-% Shembull konkret i spline kubike natyrale per pikat:
-% (1,1), (2,3), (3,2), (4,5).
+% Ky skedar perdor funksionin cubic_spline_natural.m
 %
-% Pasi ndertohet spline me cubic_spline_custom, verifikojme edhe
-% formulat e marra "me dore" per secilin nen-interval.
+% Si ta perdorni:
+%   1) Vendosni te dy skedaret ne te njejtin folder
+%   2) Ne MATLAB: shko ne ate folder dhe ekzekuto:
+%         run_cubic_spline_demo
+%
+% Mund ta ndryshoni funksionin/nyjet me poshte sipas nevojes.
 
 clear; clc; close all;
 
-% Pikat e interpolimit
-x = [1 2 3 4];
-y = [1 3 2 5];
+% -----------------------------
+% Shembull 1: Interpolim i nje funksioni te dhene
+% -----------------------------
+f = @(x) 1./(1 + 25*x.^2);     % Funksioni Runge ne [-1,1]
+a = -1; b = 1;
 
-% Ndertojme spline natyral
-pp = cubic_spline_custom(x, y, 'natural');
+n = 11;                        % numri i nyjeve (p.sh. 11)
+x = linspace(a,b,n);
+y = f(x);
 
-% Rrjeti i vleresimit
-xx = linspace(1,4,400);
-S_num = ppval(pp, xx);   % spline nga algoritmi i pergjithshem
+[S, coeffs] = cubic_spline_natural(x, y);
 
-% Spline sipas formulave manuale te nxjerra ne detyrimin teorik
-S_exp = zeros(size(xx));
+xx = linspace(a,b,1000);
+yy = S(xx);
 
-% Intervali [1,2]
-I0 = (xx >= 1) & (xx <= 2);
-xt = xx(I0);
-S_exp(I0) = 1 + (46/15).*(xt-1) - (16/15).*(xt-1).^3;
-
-% Intervali [2,3]
-I1 = (xx > 2) & (xx <= 3);
-xt = xx(I1);
-S_exp(I1) = 3 - (2/15).*(xt-2) - (16/5).*(xt-2).^2 + (7/3).*(xt-2).^3;
-
-% Intervali [3,4]
-I2 = (xx > 3) & (xx <= 4);
-xt = xx(I2);
-S_exp(I2) = 2 + (7/15).*(xt-3) + (19/5).*(xt-3).^2 - (19/15).*(xt-3).^3;
-
-% Gabimi maksimal midis dy formave
-maxDiff = max(abs(S_num - S_exp));
-fprintf('Gabimi maksimal midis spline-it numerik dhe atij manual: %.3e\n', maxDiff);
-
-% Grafiku
 figure;
-plot(xx, S_num, 'b-', 'LineWidth', 1.8); hold on;
-plot(xx, S_exp, 'r--', 'LineWidth', 1.2);
-plot(x, y, 'ko', 'MarkerFaceColor', 'k', 'MarkerSize', 6);
+plot(x, y, 'o', 'LineWidth', 1.2); hold on;
+plot(xx, yy, '-', 'LineWidth', 1.4);
+plot(xx, f(xx), '--', 'LineWidth', 1.2);
 grid on;
 xlabel('x');
-ylabel('S(x)');
-legend('Spline nga cubic\_spline\_custom', 'Spline nga formulat manuale', ...
-       'Pikat e dhena', 'Location', 'Best');
-title('Spline kubik natyral per pikat (1,1), (2,3), (3,2), (4,5)');
+ylabel('y');
+legend('Nyjet (x,y)', 'Spline kubik natyror', 'Funksioni ekzakt', 'Location', 'best');
+title('Interpolimi me spline kubik natyror');
+
+% Gabimi maksimal ne rrjetin e vleresimit
+err = max(abs(yy - f(xx)));
+fprintf('Gabimi maksimal |S(x)-f(x)| ne rrjet: %.6e\n', err);
+
+% -----------------------------
+% Shembull 2: Vleresim ne pika te veçanta
+% -----------------------------
+xq = [-0.75 -0.3 0 0.4 0.9];
+yq = S(xq);
+
+disp('Pika testimi dhe vlerat e spline-it:');
+disp(table(xq(:), yq(:), 'VariableNames', {'x', 'Sx'}));
+
+% -----------------------------
+% Shfaq koeficientet per çdo interval
+% -----------------------------
+% coeffs(i,:) = [a_i b_i c_i d_i] per [x(i), x(i+1)]
+disp('Koeficientet per intervalet [x(i), x(i+1)] : [a b c d]');
+disp(coeffs);
+
+
+
